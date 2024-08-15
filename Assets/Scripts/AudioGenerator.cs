@@ -4,43 +4,55 @@ using UnityEngine;
 
 public class AudioGenerator : MonoBehaviour
 {
-    // GET FREQUENCY
-	[SerializeField, ReadOnly] float octaveBaseFrequency;
-    [SerializeField, ReadOnly] int k;
-    [SerializeField, ReadOnly] float kFrequency;
-    readonly float d12thRootOf2 = Mathf.Pow(2.0f, 1.0f / 12.0f);
-    // SAMPLING
-    private float sampleRate = 44100;
-	private float waveLengthInSeconds = 2.0f;
+    // Frequency Constants
+    [SerializeField, ReadOnly] private float octaveBaseFrequency;
+    [SerializeField, ReadOnly] private int k;
+    [SerializeField, ReadOnly] private float kFrequency;
+    private const float d12thRootOf2 = 1.059463094359f; // Precomputed value for European Octave Range.
+
+    // Sampling Constants
+    private const float sampleRate = 44100f;
+    private const float waveLengthInSeconds = 2.0f;
     private int timeIndex = 0;
-    // SOURCE
+
+    // Audio Source and Waveform Generator
     private AudioSource audioSource;
-    private WaveformGenerator Osc;
-    void Start()
+    private WaveformGenerator oscillator;
+
+    private void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
-        audioSource.volume = 0.0f;
-        kFrequency = octaveBaseFrequency * Mathf.Pow(d12thRootOf2, k);
-        Osc = new WaveformGenerator();
+        InitializeAudioSource();
+        InitializeFrequency();
+        oscillator = new WaveformGenerator();
     }
 
-    void ConstructNote(float[] data, int i)
+    private void InitializeAudioSource()
     {
-        data[i] = Osc.Sine(timeIndex, kFrequency, sampleRate);
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource component is missing.");
+            return;
+        }
+        audioSource.volume = 0.0f;
     }
-	
-	void OnAudioFilterRead(float[] data, int channels)
-	{
-		for(int i = 0; i < data.Length; i+= channels)
-		{			
-			ConstructNote(data, i);
-			
-			timeIndex++;
-			
-			if(timeIndex >= (sampleRate * waveLengthInSeconds))
-			{
-				timeIndex = 0;
-			}
-		}
-	}
+
+    private void InitializeFrequency()
+    {
+        kFrequency = octaveBaseFrequency * Mathf.Pow(d12thRootOf2, k);
+    }
+
+    private void ConstructNoteAtIndex(float[] data, int index)
+    {
+        data[index] = oscillator.Sine(timeIndex, kFrequency, sampleRate);
+    }
+
+    private void OnAudioFilterRead(float[] data, int channels)
+    {
+        for (int i = 0; i < data.Length; i += channels)
+        {
+            ConstructNoteAtIndex(data, i);
+            timeIndex = (timeIndex + 1) % (int)(sampleRate * waveLengthInSeconds);
+        }
+    }
 }
