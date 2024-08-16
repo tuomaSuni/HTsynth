@@ -23,6 +23,7 @@ public class AudioGenerator : MonoBehaviour
     {
         InitializeAudioSource();
         InitializeFrequency();
+
         oscillator = new WaveformGenerator();
     }
 
@@ -34,7 +35,6 @@ public class AudioGenerator : MonoBehaviour
             Debug.LogError("AudioSource component is missing.");
             return;
         }
-        audioSource.volume = 0.0f;
     }
 
     private void InitializeFrequency()
