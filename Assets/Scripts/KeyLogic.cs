@@ -44,14 +44,18 @@ public class KeyLogic : MonoBehaviour
         CalculateForce();
     }
     
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        adsr.StartCoroutine(adsr.Attack());
-        isPlaying = true;
-    }
+        if (isPlaying == false)
+        {
+            adsr.StartCoroutine(adsr.Attack());
+            isPlaying = true;
+        }
 
-    private void OnCollisionExit(Collision collision)
+    }
+/*
+    private void OnTriggerExit(Collider other)
     {
         isPlaying = false;
-    }
+    }*/
 }

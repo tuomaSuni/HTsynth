@@ -41,12 +41,14 @@ public class AudioGenerator : MonoBehaviour
 
     private void InitializeFrequency()
     {
+        k = transform.GetSiblingIndex() + 1;
         kFrequency = octaveBaseFrequency * Mathf.Pow(d12thRootOf2, k);
     }
 
     private void ConstructNoteAtIndex(float[] data, int index)
     {
-        data[index] = oscillator.Sine(timeIndex, kFrequency, sampleRate);
+        data[index + 0] = oscillator.Sine(timeIndex, kFrequency, sampleRate);
+        data[index + 1] = oscillator.Sawtooth(timeIndex, kFrequency, sampleRate);
     }
 
     private void OnAudioFilterRead(float[] data, int channels)
@@ -54,6 +56,7 @@ public class AudioGenerator : MonoBehaviour
         for (int i = 0; i < data.Length; i += channels)
         {
             ConstructNoteAtIndex(data, i);
+
             timeIndex = (timeIndex + 1) % (int)(sampleRate * waveLengthInSeconds);
         }
     }

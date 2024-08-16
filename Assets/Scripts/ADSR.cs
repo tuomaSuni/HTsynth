@@ -10,11 +10,11 @@ public class ADSR : Envelope
 
     // ADSR Time and Speed Variables
     private float attackTime = 1.0f;
-    private float attackSpeed = 0.1f;
-    private float decayTime = 0.2f;
-    private float decaySpeed = 0.15f;
-    private float releaseTime = 0.10f;
-    private bool logic;
+    private float attackSpeed = 1.0f;
+    private float decayTime = 1.3f;
+    private float decaySpeed = 1.30f;
+    private float releaseTime = 1.10f;
+    private bool logic = true;
     
     // Audio Components
     private AudioSource audioSource;
@@ -80,18 +80,7 @@ public class ADSR : Envelope
 
     private IEnumerator Sustain()
     {
-        if (logic)
-        {
-            yield break;
-        }
-        else
-        {
-            while (keyLogic.isPlaying)
-            {
-                yield return null;
-            }
-        }
-
+        yield return null;
         StartCoroutine(Release());
     }
 
@@ -99,7 +88,7 @@ public class ADSR : Envelope
     {
         while (amplitude > 0.0f)
         {
-            amplitude -= Time.deltaTime * releaseTime;
+            amplitude -= releaseTime;
             yield return null;
         }
     }
