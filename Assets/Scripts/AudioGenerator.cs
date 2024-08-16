@@ -5,7 +5,7 @@ using UnityEngine;
 public class AudioGenerator : MonoBehaviour
 {
     // Frequency Constants
-    [SerializeField, ReadOnly] private float octaveBaseFrequency;
+    [SerializeField, ReadOnly] private float octaveBaseFrequency = 110f;
     [SerializeField, ReadOnly] private int k;
     [SerializeField, ReadOnly] private float kFrequency;
     private const float d12thRootOf2 = 1.059463094359f; // Precomputed value for European Octave Range.
@@ -35,6 +35,8 @@ public class AudioGenerator : MonoBehaviour
             Debug.LogError("AudioSource component is missing.");
             return;
         }
+        
+        audioSource.Play();
     }
 
     private void InitializeFrequency()

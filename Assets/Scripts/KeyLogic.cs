@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KeyLogic : MonoBehaviour
 {
-    public bool isPlaying = false;
+    [HideInInspector] public bool isPlaying = false;
     private Vector3 previousLocation;
     private float speed;
     private ADSR adsr;

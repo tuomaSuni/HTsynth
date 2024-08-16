@@ -9,20 +9,23 @@ public class ADSR : Envelope
     private float masterVolume = 1.0f;
 
     // ADSR Time and Speed Variables
-    private float attackTime;
-    private float attackSpeed;
-    private float decayTime;
-    private float decaySpeed;
-    private float releaseTime;
+    private float attackTime = 1.0f;
+    private float attackSpeed = 0.1f;
+    private float decayTime = 0.2f;
+    private float decaySpeed = 0.15f;
+    private float releaseTime = 0.10f;
     private bool logic;
     
     // Audio Components
     private AudioSource audioSource;
     private KeyLogic keyLogic;
 
-    private void Start()
+    private void Awake()
     {
         InitializeAudioSource();
+    }
+    private void Start()
+    {
         InitializeTheKey();
     }
 
@@ -66,7 +69,7 @@ public class ADSR : Envelope
 
     private IEnumerator Decay()
     {
-        while (amplitude > decayTime)
+        while (amplitude > (attackTime - decayTime))
         {
             amplitude -= Time.deltaTime * decaySpeed;
             yield return null;
