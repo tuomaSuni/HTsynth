@@ -5,57 +5,49 @@ using UnityEngine;
 public class KeyLogic : MonoBehaviour
 {
     [HideInInspector] public bool isPlaying = false;
-    private Vector3 previousLocation;
-    private float speed;
+
     private ADSR adsr;
+    private SpriteRenderer icon;
+    private Color color;
+
     private void Start()
     {
-        adsr = GetComponent<ADSR>();
-        previousLocation = transform.position;
+        InitializeComponents();
+        InitializeColor();
     }
 
-    private void InitializeADSR()
+    private void InitializeComponents()
     {
         adsr = GetComponent<ADSR>();
-        if (adsr == null)
-        {
-            gameObject.AddComponent<ADSR>();
-            return;
-        }
-    }
-    // This could be Optimized to not run on update.
-    private float CalculateForce()
-    {
-        // Calculate distance moved since the last frame
-        float distanceMoved = Vector3.Distance(transform.position, previousLocation);
-
-        // Calculate speed (distance moved per second)
-        speed = distanceMoved / Time.deltaTime;
-
-        // Store the current position for the next frame
-        previousLocation = transform.position;
-        
-
-        return speed;
+        icon = GetComponent<SpriteRenderer>();
     }
 
-    private void Update()
+    private void InitializeColor()
     {
-        CalculateForce();
+        color = icon.color;
+        color.a = 0.7f;
+        icon.color = color;
     }
     
     private void OnTriggerEnter(Collider other)
     {
-        if (isPlaying == false)
-        {
-            adsr.StartCoroutine(adsr.Attack());
-            isPlaying = true;
-        }
+        adsr.StartCoroutine(adsr.Attack());
 
+        PointLogic pointLogic = other.gameObject.GetComponent<PointLogic>();
+        pointLogic.StartCoroutine(pointLogic.CalculateForce());
+
+        isPlaying = true;
+        UpdateAlpha(0.5f);
     }
-/*
+
     private void OnTriggerExit(Collider other)
     {
-        isPlaying = false;
-    }*/
+        UpdateAlpha(0.7f);
+    }
+
+    private void UpdateAlpha(float alpha)
+    {
+        color.a = alpha;
+        icon.color = color;
+    }
 }

@@ -10,8 +10,8 @@ public class ADSR : Envelope
 
     // ADSR Time and Speed Variables
     private float attackTime = 1.0f;
-    private float attackSpeed = 1.0f;
-    private float decayTime = 1.3f;
+    private float attackSpeed = 2.0f;
+    private float decayTime = 0.5f;
     private float decaySpeed = 1.30f;
     private float releaseTime = 1.10f;
     private bool logic = true;
