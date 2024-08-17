@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.IO;
 
-public class Initializer : MonoBehaviour
+public class ProcessManager : MonoBehaviour
 {
     private static Process p;
     
@@ -31,24 +31,21 @@ public class Initializer : MonoBehaviour
                 catch (System.Exception ex)
                 {
                     // Handle any exceptions that might occur when starting the process
-                    UnityEngine.Debug.LogError("Failed to start the process: " + ex.Message);
+                    UnityEngine.Debug.Log("Failed to start the process: " + ex.Message);
                 }
             }
             else
             {
                 // Log an error if the .exe file does not exist
-                UnityEngine.Debug.LogError("Executable file not found at: " + exePath +
+                UnityEngine.Debug.Log("Executable file not found at: " + exePath +
                 ". Load file into the system or use your keyboard [Q:P] instead.");
 
-                Keyboard keyboard = gameObject.AddComponent<Keyboard>();
             }
         }
     }
 
     public static void Quit()
     {
-        UnityEngine.Debug.Log("exiting");
-
         if (p != null && !p.HasExited)
         {
             try
@@ -81,7 +78,7 @@ public class Initializer : MonoBehaviour
         }
         else
         {
-            UnityEngine.Debug.LogWarning("Process is not running.");
+            UnityEngine.Debug.Log("Application terminated succesfully");
         }
     }
 }

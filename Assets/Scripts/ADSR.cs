@@ -10,7 +10,7 @@ public class ADSR : Envelope
     private float decayTime = 0.5f;
     private float decaySpeed = 1.30f;
     private float releaseTime = 1.10f;
-    private bool logic = true;
+    private bool mode = true;
     
     public IEnumerator Attack()
     {
@@ -25,10 +25,18 @@ public class ADSR : Envelope
 
     private IEnumerator Decay()
     {
-        while (amplitude > (attackTime - decayTime))
+        if (mode == true)
         {
-            amplitude -= Time.deltaTime * decaySpeed;
-            yield return null;
+            
+        }
+        else
+        {
+            while (amplitude > (attackTime - decayTime))
+            {
+                amplitude -= Time.deltaTime * decaySpeed;
+                yield return null;
+            }
+            
         }
 
         StartCoroutine(Sustain());

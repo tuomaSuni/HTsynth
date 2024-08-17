@@ -13,7 +13,7 @@ public class EditorTools
     {
         if (state == PlayModeStateChange.ExitingPlayMode)
         {
-            Initializer.Quit();
+            ProcessManager.Quit();
         }
     }
 }

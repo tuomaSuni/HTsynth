@@ -68,7 +68,7 @@ public class KeyLogic : MonoBehaviour
         SetAlpha(0.7f);
     }
 
-    private void SetAlpha(float alpha)
+    public void SetAlpha(float alpha)
     {
         if (spriteRenderer != null)
         {
