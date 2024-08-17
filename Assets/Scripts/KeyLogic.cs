@@ -7,47 +7,73 @@ public class KeyLogic : MonoBehaviour
     [HideInInspector] public bool isPlaying = false;
 
     private ADSR adsr;
-    private SpriteRenderer icon;
-    private Color color;
+    private SpriteRenderer spriteRenderer;
+    private Color iconColor;
 
     private void Start()
     {
         InitializeComponents();
-        InitializeColor();
+        InitializeIconColor();
     }
 
     private void InitializeComponents()
     {
         adsr = GetComponent<ADSR>();
-        icon = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (adsr == null)
+        {
+            Debug.LogError("ADSR component is missing. Select an envelope to use.");
+        }
+
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer component is missing.");
+        }
     }
 
-    private void InitializeColor()
+    private void InitializeIconColor()
     {
-        color = icon.color;
-        color.a = 0.7f;
-        icon.color = color;
+        if (spriteRenderer != null)
+        {
+            iconColor = spriteRenderer.color;
+            SetAlpha(0.7f);
+        }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
-        adsr.StartCoroutine(adsr.Attack());
+        if (adsr != null)
+        {
+            StartCoroutine(adsr.Attack());
+        }
+        else
+        {
 
-        PointLogic pointLogic = other.gameObject.GetComponent<PointLogic>();
-        pointLogic.StartCoroutine(pointLogic.CalculateForce());
+        }
+
+        PointLogic pointLogic = other.GetComponent<PointLogic>();
+
+        if (pointLogic != null)
+        {
+            StartCoroutine(pointLogic.CalculateForce());
+        }
 
         isPlaying = true;
-        UpdateAlpha(0.5f);
+        SetAlpha(0.5f);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        UpdateAlpha(0.7f);
+        SetAlpha(0.7f);
     }
 
-    private void UpdateAlpha(float alpha)
+    private void SetAlpha(float alpha)
     {
-        color.a = alpha;
-        icon.color = color;
+        if (spriteRenderer != null)
+        {
+            iconColor.a = alpha;
+            spriteRenderer.color = iconColor;
+        }
     }
 }

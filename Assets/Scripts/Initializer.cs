@@ -1,23 +1,47 @@
 using UnityEngine;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.IO;
 
 public class Initializer : MonoBehaviour
 {
     private static Process p;
-
+    
     void Start()
     {
         InitializeProcess();
     }
 
-    private static void InitializeProcess()
+    private void InitializeProcess()
     {
         if (p == null)
         {
-            p = new Process(); // Initialize the static Process p
-            p.StartInfo.FileName = System.IO.Path.Combine(Application.dataPath, "External/Main.exe");
-            p.Start();
+            // Define the path to the .exe file
+            string exePath = Path.Combine(Application.dataPath, "External/Main.exe");
+
+            // Check if the .exe file exists
+            if (File.Exists(exePath))
+            {
+                try
+                {
+                    p = new Process(); // Initialize the static Process p
+                    p.StartInfo.FileName = exePath;
+                    p.Start(); // Start the process
+                }
+                catch (System.Exception ex)
+                {
+                    // Handle any exceptions that might occur when starting the process
+                    UnityEngine.Debug.LogError("Failed to start the process: " + ex.Message);
+                }
+            }
+            else
+            {
+                // Log an error if the .exe file does not exist
+                UnityEngine.Debug.LogError("Executable file not found at: " + exePath +
+                ". Load file into the system or use your keyboard [Q:P] instead.");
+
+                Keyboard keyboard = gameObject.AddComponent<Keyboard>();
+            }
         }
     }
 
