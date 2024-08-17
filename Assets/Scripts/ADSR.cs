@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class ADSR : Envelope
 {
-    // ADSR Time and Speed Variables
-    private float attackTime = 1.0f;
-    private float attackSpeed = 2.0f;
-    private float decayTime = 0.5f;
-    private float decaySpeed = 1.30f;
-    private float releaseTime = 1.10f;
-    private bool mode = true;
+    private Parameters parameters;
+    private void Start()
+    {
+        InitializeParameters();    
+    }
+
+    private void InitializeParameters()
+    {
+        parameters = transform.parent.gameObject.GetComponent<Parameters>();
+    }
     
     public IEnumerator Attack()
     {
-        while (amplitude < attackTime)
+        while (amplitude < parameters.attackTime)
         {
-            amplitude += Time.deltaTime * attackSpeed;
+            amplitude += Time.deltaTime * parameters.attackSpeed;
             yield return null;
         }
 
@@ -25,18 +28,10 @@ public class ADSR : Envelope
 
     private IEnumerator Decay()
     {
-        if (mode == true)
+        while (amplitude > (parameters.attackTime - parameters.decayTime))
         {
-            
-        }
-        else
-        {
-            while (amplitude > (attackTime - decayTime))
-            {
-                amplitude -= Time.deltaTime * decaySpeed;
-                yield return null;
-            }
-            
+            amplitude -= Time.deltaTime * parameters.decaySpeed;
+            yield return null;
         }
 
         StartCoroutine(Sustain());
@@ -44,7 +39,8 @@ public class ADSR : Envelope
 
     private IEnumerator Sustain()
     {
-        yield return null;
+        yield return new WaitForSeconds(parameters.sustainTime);
+        
         StartCoroutine(Release());
     }
 
@@ -52,7 +48,7 @@ public class ADSR : Envelope
     {
         while (amplitude > 0.0f)
         {
-            amplitude -= releaseTime;
+            amplitude -= parameters.releaseTime;
             yield return null;
         }
     }

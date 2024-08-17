@@ -43,15 +43,6 @@ public class KeyLogic : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (adsr != null)
-        {
-            StartCoroutine(adsr.Attack());
-        }
-        else
-        {
-
-        }
-
         PointLogic pointLogic = other.GetComponent<PointLogic>();
 
         if (pointLogic != null)
@@ -59,12 +50,20 @@ public class KeyLogic : MonoBehaviour
             StartCoroutine(pointLogic.CalculateForce());
         }
 
+        if (adsr != null)
+        {
+            StartCoroutine(adsr.Attack());
+        }
+
         isPlaying = true;
+
         SetAlpha(0.5f);
     }
 
     private void OnTriggerExit(Collider other)
     {
+        isPlaying = false;
+        
         SetAlpha(0.7f);
     }
 

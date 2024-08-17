@@ -10,31 +10,15 @@ public class Envelope : MonoBehaviour
 
     // Audio Components
     private AudioSource audioSource;
-    private KeyLogic keyLogic;
-
+    
     private void Awake()
     {
         InitializeAudioSource();
     }
 
-    private void Start()
-    {
-        InitializeTheKey();
-    }
-
     private void Update()
     {
         audioSource.volume = amplitude * masterVolume;
-    }
-
-    private void InitializeTheKey()
-    {
-        keyLogic = GetComponent<KeyLogic>();
-        if (keyLogic == null)
-        {
-            Debug.LogError("KeyLogic component is missing.");
-            return;
-        }
     }
 
     private void InitializeAudioSource()
