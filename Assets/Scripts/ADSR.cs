@@ -48,7 +48,7 @@ public class ADSR : Envelope
     {
         while (amplitude > 0.0f)
         {
-            amplitude -= parameters.releaseTime;
+            amplitude -= Time.deltaTime * parameters.releaseTime;
             yield return null;
         }
     }

@@ -1271,7 +1271,6 @@ GameObject:
   - component: {fileID: 4586119137497289871}
   - component: {fileID: 4215547810760417117}
   - component: {fileID: 3776124565871265446}
-  - component: {fileID: 5258705339796856787}
   - component: {fileID: 1735225714817938528}
   m_Layer: 0
   m_Name: Point (8)
@@ -1345,27 +1344,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5258705339796856787
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499941638433195653}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1735225714817938528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,6 +1356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f3edae09f08b3449a85d9ed7ed9d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circles: []
 --- !u!1 &1525682094420334025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1940,7 +1919,6 @@ GameObject:
   - component: {fileID: 8085214888669566620}
   - component: {fileID: 501227593460988311}
   - component: {fileID: 6925004960210245755}
-  - component: {fileID: 6451404056375844727}
   - component: {fileID: 5282323978141579800}
   m_Layer: 0
   m_Name: Point (20)
@@ -2014,27 +1992,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6451404056375844727
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2857343691524956700}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5282323978141579800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2047,6 +2004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f3edae09f08b3449a85d9ed7ed9d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circles: []
 --- !u!1 &3430386405522473805
 GameObject:
   m_ObjectHideFlags: 0
@@ -2926,7 +2884,6 @@ GameObject:
   - component: {fileID: 5260253998743134906}
   - component: {fileID: 1026852076165406379}
   - component: {fileID: 2060220996227005774}
-  - component: {fileID: 5156390878266447114}
   - component: {fileID: 3346778080102971158}
   m_Layer: 0
   m_Name: Point (16)
@@ -3000,27 +2957,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5156390878266447114
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4958664457423316937}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3346778080102971158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3033,6 +2969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f3edae09f08b3449a85d9ed7ed9d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circles: []
 --- !u!1 &5314460671124612603
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,7 +2981,6 @@ GameObject:
   - component: {fileID: 1086109092749320352}
   - component: {fileID: 7720502058118270549}
   - component: {fileID: 2257646471379240683}
-  - component: {fileID: 3707508596196963288}
   - component: {fileID: 5876615781456342}
   m_Layer: 0
   m_Name: Point (4)
@@ -3118,27 +3054,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3707508596196963288
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5314460671124612603}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5876615781456342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3151,6 +3066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f3edae09f08b3449a85d9ed7ed9d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circles: []
 --- !u!1 &5671456532192651452
 GameObject:
   m_ObjectHideFlags: 0
@@ -4319,7 +4235,6 @@ GameObject:
   - component: {fileID: 4241079717076891709}
   - component: {fileID: 4819916704148803615}
   - component: {fileID: 8450356233687569981}
-  - component: {fileID: 2588586589786287711}
   - component: {fileID: 4431663482815938571}
   m_Layer: 0
   m_Name: Point (12)
@@ -4393,27 +4308,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2588586589786287711
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7966727788848115217}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4431663482815938571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4426,6 +4320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f3edae09f08b3449a85d9ed7ed9d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circles: []
 --- !u!1 &8039897122283867654
 GameObject:
   m_ObjectHideFlags: 0

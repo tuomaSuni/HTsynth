@@ -47,8 +47,9 @@ public class AudioGenerator : MonoBehaviour
 
     private void ConstructNoteAtIndex(float[] data, int index)
     {
-        data[index + 0] = oscillator.Sine(timeIndex, kFrequency * 2.0f, sampleRate);
-        data[index + 1] = oscillator.Sawtooth(timeIndex, kFrequency * 1.0f, sampleRate);
+        data[index] =
+        oscillator.Sine(timeIndex, kFrequency * 0.4f, sampleRate) +
+        oscillator.Sawtooth(timeIndex, kFrequency * 2.0f, sampleRate);
     }
 
     private void OnAudioFilterRead(float[] data, int channels)

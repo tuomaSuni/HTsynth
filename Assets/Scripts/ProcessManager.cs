@@ -76,9 +76,5 @@ public class ProcessManager : MonoBehaviour
                 UnityEngine.Debug.LogError("An unexpected error occurred: " + e.Message);
             }
         }
-        else
-        {
-            UnityEngine.Debug.Log("Application terminated succesfully");
-        }
     }
 }

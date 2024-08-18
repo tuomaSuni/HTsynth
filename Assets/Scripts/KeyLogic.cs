@@ -4,27 +4,32 @@ using UnityEngine;
 
 public class KeyLogic : MonoBehaviour
 {
-    [HideInInspector] public bool isPlaying = false;
-
-    private ADSR adsr;
     private SpriteRenderer spriteRenderer;
+    private ADSR adsr;
     private Color iconColor;
 
+    private void Awake()
+    {
+        InitializeADSR();
+    }
     private void Start()
     {
-        InitializeComponents();
+        InitializeSpriteRenderer();
         InitializeIconColor();
     }
 
-    private void InitializeComponents()
+    private void InitializeADSR()
     {
         adsr = GetComponent<ADSR>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (adsr == null)
         {
             Debug.LogError("ADSR component is missing. Select an envelope to use.");
         }
+    }
+    private void InitializeSpriteRenderer()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (spriteRenderer == null)
         {
@@ -41,32 +46,6 @@ public class KeyLogic : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        PointLogic pointLogic = other.GetComponent<PointLogic>();
-
-        if (pointLogic != null)
-        {
-            StartCoroutine(pointLogic.CalculateForce());
-        }
-
-        if (adsr != null)
-        {
-            StartCoroutine(adsr.Attack());
-        }
-
-        isPlaying = true;
-
-        SetAlpha(0.5f);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        isPlaying = false;
-        
-        SetAlpha(0.7f);
-    }
-
     public void SetAlpha(float alpha)
     {
         if (spriteRenderer != null)
@@ -74,5 +53,16 @@ public class KeyLogic : MonoBehaviour
             iconColor.a = alpha;
             spriteRenderer.color = iconColor;
         }
+    }
+
+    public void OnEnter()
+    {
+        adsr.StartCoroutine(adsr.Attack());
+        SetAlpha(0.5f);
+    }
+
+    public void OnExit()
+    {
+        SetAlpha(0.7f);
     }
 }
