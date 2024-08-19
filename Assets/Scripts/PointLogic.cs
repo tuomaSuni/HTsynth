@@ -12,7 +12,6 @@ public class PointLogic : MonoBehaviour
     private HashSet<GameObject> triggeredCircles = new HashSet<GameObject>();
 
     private Vector3 previousLocation;
-    private float force;
     public GameObject[] circles;
     private float sphereRadius = 0.5f;
     private float circleWorldRadius = 0.315f;
@@ -45,24 +44,31 @@ public class PointLogic : MonoBehaviour
             {
                 if (triggeredCircles.Add(circle))
                 {
-                    circle.GetComponent<KeyLogic>().OnEnter();
+                    circle.GetComponent<KeyLogic>().SetAlpha(0.5f);
+                    StartCoroutine(CalculateAttackForce(circle));
                 }
             }
             else
             {
                 if (triggeredCircles.Remove(circle))
                 {
-                    circle.GetComponent<KeyLogic>().OnExit();
+                    circle.GetComponent<KeyLogic>().SetAlpha(0.7f);
                 }
             }
         }
     }
-    public IEnumerator CalculateForce()
+    public IEnumerator CalculateAttackForce(GameObject circle)
     {
         previousLocation = transform.position;
 
-        yield return new WaitForSeconds(0.02f);
+        yield return new WaitForSeconds(0.03f);
 
-        force = (transform.position - previousLocation).magnitude / Time.deltaTime;
+        float force = (transform.position - previousLocation).magnitude / Time.deltaTime;
+        force = Mathf.Clamp(force, 0f, 100f);
+        force = force / 100f;
+
+        ADSR adsr = circle.GetComponent<ADSR>();
+
+        adsr.StartCoroutine(adsr.Attack(force));
     }
 }

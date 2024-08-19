@@ -5,6 +5,8 @@ using UnityEngine;
 public class ADSR : Envelope
 {
     private Parameters parameters;
+    private float force;
+
     private void Start()
     {
         InitializeParameters();    
@@ -15,40 +17,42 @@ public class ADSR : Envelope
         parameters = transform.parent.gameObject.GetComponent<Parameters>();
     }
     
-    public IEnumerator Attack()
+    public IEnumerator Attack(float InitialForce)
     {
-        while (amplitude < parameters.attackTime)
+        force = InitialForce;
+
+        while (amplitude < parameters.attackTime * force)
         {
             amplitude += Time.deltaTime * parameters.attackSpeed;
             yield return null;
         }
 
-        StartCoroutine(Decay());
+        StartCoroutine(Decay(force));
     }
 
-    private IEnumerator Decay()
+    private IEnumerator Decay(float force)
     {
         while (amplitude > (parameters.attackTime - parameters.decayTime))
         {
-            amplitude -= Time.deltaTime * parameters.decaySpeed;
+            amplitude -= Time.deltaTime * parameters.decaySpeed * force;
             yield return null;
         }
 
-        StartCoroutine(Sustain());
+        StartCoroutine(Sustain(force));
     }
 
-    private IEnumerator Sustain()
+    private IEnumerator Sustain(float force)
     {
         yield return new WaitForSeconds(parameters.sustainTime);
         
-        StartCoroutine(Release());
+        StartCoroutine(Release(force));
     }
 
-    private IEnumerator Release()
+    private IEnumerator Release(float force)
     {
         while (amplitude > 0.0f)
         {
-            amplitude -= Time.deltaTime * parameters.releaseTime;
+            amplitude -= Time.deltaTime * parameters.releaseTime * force;
             yield return null;
         }
     }
