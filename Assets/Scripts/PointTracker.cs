@@ -35,8 +35,8 @@ public class PointTracker : MonoBehaviour
                 if (coordinates.Length == 3)
                 {
                     // Parse the x, y, z coordinates and scale as needed
-                    float x = 10 - float.Parse(coordinates[0]) / 100f;
-                    float y =      float.Parse(coordinates[1]) / 100f;
+                    float x = 7 - float.Parse(coordinates[0]) / 100f;
+                    float y =      float.Parse(coordinates[1]) / 100f  - 3;
                     float z =      float.Parse(coordinates[2]) / 100f;
 
                     Vector3 xyz = new Vector3(x, y, z);

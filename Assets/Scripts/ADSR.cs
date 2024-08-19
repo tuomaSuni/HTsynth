@@ -6,6 +6,7 @@ public class ADSR : Envelope
 {
     private Parameters parameters;
     private float force;
+    private Coroutine currentEnvelopeCoroutine;
 
     private void Start()
     {
@@ -16,21 +17,32 @@ public class ADSR : Envelope
     {
         parameters = transform.parent.gameObject.GetComponent<Parameters>();
     }
-    
-    public IEnumerator Attack(float InitialForce)
+
+    public void PlayNote(float InitialForce)
     {
         force = InitialForce;
 
+        // Stop any currently running envelope coroutine
+        if (currentEnvelopeCoroutine != null)
+        {
+            StopCoroutine(currentEnvelopeCoroutine);
+        }
+        // Start the Attack coroutine and keep a reference to it
+        currentEnvelopeCoroutine = StartCoroutine(Attack());
+    }
+
+    private IEnumerator Attack()
+    {
         while (amplitude < parameters.attackTime * force)
         {
             amplitude += Time.deltaTime * parameters.attackSpeed;
             yield return null;
         }
-
-        StartCoroutine(Decay(force));
+        
+        currentEnvelopeCoroutine = StartCoroutine(Decay());
     }
 
-    private IEnumerator Decay(float force)
+    private IEnumerator Decay()
     {
         while (amplitude > (parameters.attackTime - parameters.decayTime))
         {
@@ -38,17 +50,17 @@ public class ADSR : Envelope
             yield return null;
         }
 
-        StartCoroutine(Sustain(force));
+        currentEnvelopeCoroutine = StartCoroutine(Sustain());
     }
 
-    private IEnumerator Sustain(float force)
+    private IEnumerator Sustain()
     {
         yield return new WaitForSeconds(parameters.sustainTime);
         
-        StartCoroutine(Release(force));
+        currentEnvelopeCoroutine = StartCoroutine(Release());
     }
 
-    private IEnumerator Release(float force)
+    private IEnumerator Release()
     {
         while (amplitude > 0.0f)
         {

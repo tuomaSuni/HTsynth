@@ -8,16 +8,23 @@ public class PointLogic : MonoBehaviour
     // meaning it is very fast regardless of the number of elements in the collection.
     // In a HashSet, elements are not stored in any specific order, so you cannot directly get the index of an element in the HashSet
     // as you would in an array or a list.
-    
+    private float averageSpeed;
+    private Vector3 previousLocation = new Vector3(0, 0, 0);
+    private Queue<float> speedQueue;
+    private int averageFrames = 4; // Number of frames to average the speed over
     private HashSet<GameObject> triggeredCircles = new HashSet<GameObject>();
-
-    private Vector3 previousLocation;
     public GameObject[] circles;
     private float sphereRadius = 0.5f;
     private float circleWorldRadius = 0.315f;
-    void Update()
+    private void Start()
+    {
+        speedQueue = new Queue<float>(averageFrames);
+    }
+
+    private void Update()
     {
         DetectOcclusion();
+        DetectSpeed();
     }
 
 
@@ -44,8 +51,10 @@ public class PointLogic : MonoBehaviour
             {
                 if (triggeredCircles.Add(circle))
                 {
+                    ADSR adsr = circle.GetComponent<ADSR>();
+                    adsr.PlayNote(averageSpeed);
+                    Debug.Log(averageSpeed);
                     circle.GetComponent<KeyLogic>().SetAlpha(0.5f);
-                    StartCoroutine(CalculateAttackForce(circle));
                 }
             }
             else
@@ -57,18 +66,35 @@ public class PointLogic : MonoBehaviour
             }
         }
     }
-    public IEnumerator CalculateAttackForce(GameObject circle)
+
+    private float DetectSpeed()
     {
+        // Calculate displacement
+        Vector3 displacement = transform.position - previousLocation;
+        float currentSpeed = displacement.magnitude / Time.deltaTime;
+
+        // Update previousLocation after calculating speed
         previousLocation = transform.position;
 
-        yield return new WaitForSeconds(0.03f);
+        // Add current speed to the queue
+        speedQueue.Enqueue(currentSpeed);
 
-        float force = (transform.position - previousLocation).magnitude / Time.deltaTime;
-        force = Mathf.Clamp(force, 0f, 100f);
-        force = force / 100f;
+        // Remove the oldest speed from the queue if we've reached the limit
+        if (speedQueue.Count > averageFrames)
+        {
+            speedQueue.Dequeue();
+        }
 
-        ADSR adsr = circle.GetComponent<ADSR>();
+        // Calculate the average speed
+        averageSpeed = 0f;
 
-        adsr.StartCoroutine(adsr.Attack(force));
+        foreach (float spd in speedQueue)
+        {
+            averageSpeed += spd;
+        }
+        averageSpeed /= speedQueue.Count;
+
+        averageSpeed = Mathf.Clamp01(averageSpeed);
+        return averageSpeed;
     }
 }

@@ -15,7 +15,7 @@ public class Keyboard : MonoBehaviour
             if (Input.GetKeyDown(keys[i].ToString()))
             {
                 adsr = instrument.transform.GetChild(i).GetComponent<ADSR>();
-                StartCoroutine(adsr.Attack(1.0f));
+                adsr.PlayNote(1.0f);
                 keylogic = instrument.transform.GetChild(i).GetComponent<KeyLogic>();
                 keylogic.SetAlpha(0.5f);
             }
