@@ -7,6 +7,7 @@ public class KeyLogic : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private ADSR adsr;
     private Color iconColor;
+    [HideInInspector] public bool isActive;
     private void Start()
     {
         InitializeSpriteRenderer();
@@ -28,12 +29,14 @@ public class KeyLogic : MonoBehaviour
         if (spriteRenderer != null)
         {
             iconColor = spriteRenderer.color;
-            SetAlpha(0.7f);
+            SetActive(false, 0.7f);
         }
     }
 
-    public void SetAlpha(float alpha)
+    public void SetActive(bool active, float alpha)
     {
+        isActive = active;
+
         if (spriteRenderer != null)
         {
             iconColor.a = alpha;

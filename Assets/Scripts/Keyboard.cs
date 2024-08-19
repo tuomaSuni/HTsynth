@@ -17,12 +17,12 @@ public class Keyboard : MonoBehaviour
                 adsr = instrument.transform.GetChild(i).GetComponent<ADSR>();
                 adsr.PlayNote(1.0f);
                 keylogic = instrument.transform.GetChild(i).GetComponent<KeyLogic>();
-                keylogic.SetAlpha(0.5f);
+                keylogic.SetActive(true, 1.0f);
             }
             if (Input.GetKeyUp(keys[i].ToString()))
             {
                 keylogic = instrument.transform.GetChild(i).GetComponent<KeyLogic>();
-                keylogic.SetAlpha(0.7f);
+                keylogic.SetActive(false, 0.7f);
             }
         }
     }

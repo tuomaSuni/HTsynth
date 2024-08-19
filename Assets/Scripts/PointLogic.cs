@@ -11,11 +11,12 @@ public class PointLogic : MonoBehaviour
     private float averageSpeed;
     private Vector3 previousLocation = new Vector3(0, 0, 0);
     private Queue<float> speedQueue;
-    private int averageFrames = 4; // Number of frames to average the speed over
+    private int averageFrames = 10; // Number of frames to average the speed over
     private HashSet<GameObject> triggeredCircles = new HashSet<GameObject>();
     public GameObject[] circles;
     private float sphereRadius = 0.5f;
-    private float circleWorldRadius = 0.315f;
+    private float circleWorldRadius = 0.250f;
+
     private void Start()
     {
         speedQueue = new Queue<float>(averageFrames);
@@ -26,7 +27,6 @@ public class PointLogic : MonoBehaviour
         DetectOcclusion();
         DetectSpeed();
     }
-
 
     private void DetectOcclusion()
     {
@@ -51,17 +51,23 @@ public class PointLogic : MonoBehaviour
             {
                 if (triggeredCircles.Add(circle))
                 {
-                    ADSR adsr = circle.GetComponent<ADSR>();
-                    adsr.PlayNote(averageSpeed);
-                    Debug.Log(averageSpeed);
-                    circle.GetComponent<KeyLogic>().SetAlpha(0.5f);
+                    KeyLogic keylogic = circle.GetComponent<KeyLogic>();
+                    
+                    if (keylogic.isActive == false)
+                    {
+                        keylogic.SetActive(true, 1.0f);
+                        
+                        ADSR adsr = circle.GetComponent<ADSR>();
+                        adsr.PlayNote(averageSpeed);
+                    }
                 }
             }
             else
             {
                 if (triggeredCircles.Remove(circle))
                 {
-                    circle.GetComponent<KeyLogic>().SetAlpha(0.7f);
+                    KeyLogic keylogic = circle.GetComponent<KeyLogic>();
+                    keylogic.SetActive(false, 0.7f);
                 }
             }
         }
@@ -94,7 +100,8 @@ public class PointLogic : MonoBehaviour
         }
         averageSpeed /= speedQueue.Count;
 
-        averageSpeed = Mathf.Clamp01(averageSpeed);
+        averageSpeed = Mathf.Clamp01(averageSpeed / 20f);
+        
         return averageSpeed;
     }
 }

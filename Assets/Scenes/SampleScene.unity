@@ -1016,9 +1016,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70edb36091100bc428386f2a974bec1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envelope: 0
+  sustainMode: 0
   attackTime: 1
   attackSpeed: 4
-  decayTime: 1
+  decayTime: 0.5
   decaySpeed: 3
   sustainTime: 0
   releaseTime: 1
@@ -1051,6 +1053,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815156307}
+  - component: {fileID: 815156308}
   - component: {fileID: 815156306}
   m_Layer: 0
   m_Name: System
@@ -1091,6 +1094,18 @@ Transform:
   - {fileID: 999023415}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &815156308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815156305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7303f7272372bfc4396bc9d59efe6f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &834240902 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2159228573206409024, guid: ac03e8aa4c46cf04488316a467825752, type: 3}

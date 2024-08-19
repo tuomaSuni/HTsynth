@@ -2,9 +2,9 @@ using UnityEditor;
 using UnityEngine;
 
 [InitializeOnLoad]
-public class EditorTools
+public class OnEditorQuit
 {
-    static EditorTools()
+    static OnEditorQuit()
     {
         EditorApplication.playModeStateChanged += ModeChanged;
     }
