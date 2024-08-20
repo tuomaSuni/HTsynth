@@ -6,16 +6,22 @@ public class Keyboard : MonoBehaviour
 {
     private char[] keys = { 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p' };
     [SerializeField] private GameObject instrument;
-    private ADSR adsr;
     private KeyLogic keylogic;
+    private System.Type type;
+    void Start()
+    {
+        type = instrument.GetComponent<SetModulator>().type;
+    }
+
     void Update()
     {
         for (int i = 0; i < keys.Length; i++)
         {
             if (Input.GetKeyDown(keys[i].ToString()))
             {
-                adsr = instrument.transform.GetChild(i).GetComponent<ADSR>();
-                adsr.PlayNote(1.0f);
+                Component modulator = instrument.transform.GetChild(i).GetComponent(type);
+                modulator.GetType().GetMethod("PlayNote").Invoke(modulator, new object[] { 1.0f });
+
                 keylogic = instrument.transform.GetChild(i).GetComponent<KeyLogic>();
                 keylogic.SetActive(true, 1.0f);
             }

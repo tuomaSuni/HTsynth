@@ -5,18 +5,35 @@ using UnityEngine;
 public class ADSR : ADR
 {
     private KeyLogic keylogic;
+    private SetModulator setModulator;
     private bool isActive;
 
     protected override void Start()
     {
         base.Start();
 
-        InitializeKey(); 
+        InitializeKey();
+        InitializeModulator();
     }
 
     private void InitializeKey()
     {
         keylogic = GetComponent<KeyLogic>();
+
+        if (keylogic == null)
+        {
+            Debug.LogError("KeyLogic component is missing.");
+        }
+    }
+
+    private void InitializeModulator()
+    {
+        setModulator = transform.parent.gameObject.GetComponent<SetModulator>();
+
+        if (setModulator == null)
+        {
+            Debug.LogError("SetModulator component is missing.");
+        }
     }
 
     protected override IEnumerator Decay()
@@ -33,7 +50,7 @@ public class ADSR : ADR
 
     private IEnumerator Sustain()
     {
-        if (parameters.sustainMode == Parameters.Modes.Infinite)
+        if (setModulator.sustainMode == SetModulator.Modes.Infinite)
         {
             while (keylogic.isActive == true)
             {

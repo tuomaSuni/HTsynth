@@ -8,18 +8,21 @@ public class PointLogic : MonoBehaviour
     // meaning it is very fast regardless of the number of elements in the collection.
     // In a HashSet, elements are not stored in any specific order, so you cannot directly get the index of an element in the HashSet
     // as you would in an array or a list.
-    private float averageSpeed;
+    private float speed;
     private Vector3 previousLocation = new Vector3(0, 0, 0);
     private Queue<float> speedQueue;
-    private int averageFrames = 10; // Number of frames to average the speed over
-    private HashSet<GameObject> triggeredCircles = new HashSet<GameObject>();
-    public GameObject[] circles;
+    private int frames = 10; // Number of frames to average the speed over
+    private HashSet<GameObject> triggeredKeys = new HashSet<GameObject>();
+    [SerializeField] private GameObject[] keys;
     private float sphereRadius = 0.5f;
-    private float circleWorldRadius = 0.250f;
+    private float keyWorldRadius = 0.250f;
+    private System.Type type;
+    [SerializeField] private GameObject instrument;
 
     private void Start()
     {
-        speedQueue = new Queue<float>(averageFrames);
+        speedQueue = new Queue<float>(frames);
+        type = instrument.GetComponent<SetModulator>().type;
     }
 
     private void Update()
@@ -35,38 +38,39 @@ public class PointLogic : MonoBehaviour
         Vector3 sphereEdgeScreenPos = Camera.main.WorldToScreenPoint(sphereEdgeWorldPos);
         float projectedSphereRadius = Vector3.Distance(sphereScreenPos, sphereEdgeScreenPos);
 
-        foreach (var circle in circles)
+        foreach (var key in keys)
         {
             
-            Vector3 circleScreenPos = Camera.main.WorldToScreenPoint(circle.transform.position);
+            Vector3 keyScreenPos = Camera.main.WorldToScreenPoint(key.transform.position);
             
-            Vector3 circleEdgeWorldPos = circle.transform.position + Vector3.right * circleWorldRadius;
-            Vector3 circleEdgeScreenPos = Camera.main.WorldToScreenPoint(circleEdgeWorldPos);
-            float projectedCircleRadius = Vector3.Distance(circleScreenPos, circleEdgeScreenPos);
+            Vector3 keyEdgeWorldPos = key.transform.position + Vector3.right * keyWorldRadius;
+            Vector3 keyEdgeScreenPos = Camera.main.WorldToScreenPoint(keyEdgeWorldPos);
+            float projectedKeyRadius = Vector3.Distance(keyScreenPos, keyEdgeScreenPos);
             
-            float distance = Vector2.Distance(new Vector2(sphereScreenPos.x, sphereScreenPos.y), new Vector2(circleScreenPos.x, circleScreenPos.y));
-            bool isOverlapping = distance < (projectedSphereRadius + projectedCircleRadius);
+            float distance = Vector2.Distance(new Vector2(sphereScreenPos.x, sphereScreenPos.y), new Vector2(keyScreenPos.x, keyScreenPos.y));
+            bool isOverlapping = distance < (projectedSphereRadius + projectedKeyRadius);
 
             if (isOverlapping)
             {
-                if (triggeredCircles.Add(circle))
+                if (triggeredKeys.Add(key))
                 {
-                    KeyLogic keylogic = circle.GetComponent<KeyLogic>();
-                    
+                    KeyLogic keylogic = key.GetComponent<KeyLogic>();
+                    Debug.Log(keylogic.isActive);
                     if (keylogic.isActive == false)
                     {
+                        Debug.Log("here");
                         keylogic.SetActive(true, 1.0f);
                         
-                        ADSR adsr = circle.GetComponent<ADSR>();
-                        adsr.PlayNote(averageSpeed);
+                        Component modulator = key.GetComponent(type);
+                        modulator.GetType().GetMethod("PlayNote").Invoke(modulator, new object[] { speed });
                     }
                 }
             }
             else
             {
-                if (triggeredCircles.Remove(circle))
+                if (triggeredKeys.Remove(key))
                 {
-                    KeyLogic keylogic = circle.GetComponent<KeyLogic>();
+                    KeyLogic keylogic = key.GetComponent<KeyLogic>();
                     keylogic.SetActive(false, 0.7f);
                 }
             }
@@ -86,22 +90,22 @@ public class PointLogic : MonoBehaviour
         speedQueue.Enqueue(currentSpeed);
 
         // Remove the oldest speed from the queue if we've reached the limit
-        if (speedQueue.Count > averageFrames)
+        if (speedQueue.Count > frames)
         {
             speedQueue.Dequeue();
         }
 
         // Calculate the average speed
-        averageSpeed = 0f;
+        speed = 0f;
 
         foreach (float spd in speedQueue)
         {
-            averageSpeed += spd;
+            speed += spd;
         }
-        averageSpeed /= speedQueue.Count;
+        speed /= speedQueue.Count;
 
-        averageSpeed = Mathf.Clamp01(averageSpeed / 20f);
+        speed = Mathf.Clamp01(speed / 20f);
         
-        return averageSpeed;
+        return speed;
     }
 }

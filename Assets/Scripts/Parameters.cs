@@ -4,24 +4,6 @@ using UnityEngine;
 
 public class Parameters : MonoBehaviour
 {
-    [HideInInspector] public enum Envelopes
-    {
-        None,
-        ADR,
-        ADSR
-    }
-
-    [Header("Select Envelope:")]
-    [Tooltip("Select an envelope to be used in audio generation.")] public Envelopes envelope;
-
-    [HideInInspector] public enum Modes
-    {
-        Infinite,
-        Timed
-    }
-
-    [Tooltip("Note plays throughout the time it is being active.")] public Modes sustainMode;
-
     [Header("Programmable parameters:")]
     [Tooltip("Time it takes until audio reaches the peak.")] [Range(0, 1)] public float attackTime = 1.0f;
     [HideInInspector] public float attackSpeed = 4.0f;

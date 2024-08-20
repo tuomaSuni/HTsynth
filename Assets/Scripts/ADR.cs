@@ -16,6 +16,11 @@ public class ADR : Envelope
     private void InitializeParameters()
     {
         parameters = transform.parent.gameObject.GetComponent<Parameters>();
+
+        if (parameters == null)
+        {
+            Debug.LogError("Parameters component is missing.");
+        }
     }
 
     public void PlayNote(float InitialForce)
