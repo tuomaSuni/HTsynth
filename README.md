@@ -25,13 +25,14 @@ Place the downloaded Main.exe into the HTsynth/Assets/External directory. <br/>
 
 <br/>
 
-1. **Navigate to the External Assets Directory:** <br/>
-Open a terminal and navigate to the project's HTsynth/Assets/External directory. <br/><br/>
-*cd HTsynth/Assets/External*
+1. **Clone the repository:** <br/>
+`git clone https://github.com/tuomatuni/opencv_mediapipe.git`
+Open a terminal and navigate to the directory. <br/><br/>
+`cd opencv_mediapipe`
 
 2. **Create the Executable:** <br/>
 Use pyinstaller to bundle the Python script into an executable. Replace [PATH-TO-MEDIAPIPE-PACKAGE] with the actual path to your installed Mediapipe package.<br/><br/>
-*pyinstaller --add-data "C.\[PATH-TO-MEDIAPIPE-PACKAGE];mediapipe" --noconsole --one-file Main.py* <br/><br/>
+`pyinstaller --add-data "C.\[PATH-TO-MEDIAPIPE-PACKAGE];mediapipe" --noconsole --one-file Main.py` <br/><br/>
 
 3. **Move the Executable:** <br/>
 After the build process completes, move the generated .exe file from the dist folder into the HTsynth/Assets/External directory.
