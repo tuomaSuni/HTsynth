@@ -8,7 +8,7 @@ These instructions will help you set up the project on your local machine for de
 
 ### Prerequisites
 
-Unity: Version 2022.3.42f1 <br/>
+Unity: Version 2022.3.44f1 <br/>
 Main.exe: Pre-built executable or build from source
 
 ### Installation
@@ -26,13 +26,13 @@ Place the downloaded Main.exe into the HTsynth/Assets/External directory. <br/>
 <br/>
 
 1. **Clone the repository:** <br/>
-`git clone https://github.com/tuomatuni/opencv_mediapipe.git`
+`git clone https://github.com/tuomaSuni/opencv_mediapipe.git`
 Open a terminal and navigate to the directory. <br/><br/>
 `cd opencv_mediapipe`
 
 2. **Create the Executable:** <br/>
 Use pyinstaller to bundle the Python script into an executable. Replace [PATH-TO-MEDIAPIPE-PACKAGE] with the actual path to your installed Mediapipe package.<br/><br/>
-`pyinstaller --add-data "C.\[PATH-TO-MEDIAPIPE-PACKAGE];mediapipe" --noconsole --one-file Main.py` <br/><br/>
+`pyinstaller --add-data "C:\[PATH-TO-MEDIAPIPE-PACKAGE];mediapipe" --noconsole --one-file Main.py` <br/><br/>
 
 3. **Move the Executable:** <br/>
 After the build process completes, move the generated .exe file from the dist folder into the HTsynth/Assets/External directory.
