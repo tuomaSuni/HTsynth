@@ -8,7 +8,7 @@ These instructions will help you set up the project on your local machine for de
 
 ### Prerequisites
 
-Unity: Version 2022.3.44f1 <br/>
+Unity: Version 2022.3.49f1 <br/>
 Main.exe: Pre-built executable or build from source
 
 ### Installation
