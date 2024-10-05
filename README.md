@@ -8,8 +8,8 @@ These instructions will help you set up the project on your local machine for de
 
 ### Prerequisites
 
-Unity: Version 2022.3.49f1 <br>
-Main.exe: Pre-built executable or build from source
+* Unity: Version 2022.3.49f1 <br>
+* Main.exe: Pre-built executable or build from source
 
 ### Installation
 
@@ -17,7 +17,7 @@ Main.exe: Pre-built executable or build from source
 [Main.exe](https://www.dropbox.com/scl/fi/s1cy84rrwmogtx0u2zvmb/Main.exe?rlkey=fpzn4vum7kww85uga0cqernyq&st=sf7fech6&dl=0)
 
 2. **Move the Executable:** <br>
-Place the downloaded Main.exe into the HTsynth/Assets/External directory. <br>
+Place the downloaded Main.exe into the HTsynth/Assets/External directory <br>
 
 <br>
 
